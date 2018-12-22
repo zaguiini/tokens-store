@@ -1,5 +1,5 @@
 {
-  "name": "token-store",
+  "name": "tokens-store",
   "version": "1.0.0",
   "description": "A Token store for managing access and refresh tokens",
   "main": "dist/index.js",
