@@ -14,7 +14,7 @@ export interface TokenHandlers {
   getRefreshToken: GetterHandler
 }
 
-class TokenStore {
+class TokensStore {
   private subscribers: Array<Subscriber>
 
   setAccessToken: SetterHandler
@@ -65,4 +65,4 @@ class TokenStore {
   }
 }
 
-export default TokenStore
+export default TokensStore

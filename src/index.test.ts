@@ -1,6 +1,6 @@
-import TokenStore, { TokenHandlers } from './index'
+import TokensStore, { TokenHandlers } from './index'
 
-describe('TokenStore', () => {
+describe('TokensStore', () => {
   let handlers: TokenHandlers
   let accessToken: string | null
   let refreshToken: string | null
@@ -24,14 +24,14 @@ describe('TokenStore', () => {
   })
 
   it('should construct without any errors', () => {
-    new TokenStore(handlers)
+    new TokensStore(handlers)
   })
 
   it('should not set token', async () => {
     const e = new Error('I am an error!')
     handlers.setAccessToken = () => Promise.reject(e)
 
-    const store = new TokenStore(handlers)
+    const store = new TokensStore(handlers)
 
     let error
 
@@ -45,7 +45,7 @@ describe('TokenStore', () => {
   })
 
   it('should retrieve tokens', async () => {
-    const store = new TokenStore(handlers)
+    const store = new TokensStore(handlers)
 
     expect(await store.getTokens()).toEqual({
       accessToken,
@@ -56,7 +56,7 @@ describe('TokenStore', () => {
   it('should observe for new values', async () => {
     const observer = jest.fn()
 
-    const store = new TokenStore(handlers)
+    const store = new TokensStore(handlers)
     store.subscribe(observer)
 
     const newAccessToken = 'newAccessToken'
@@ -75,7 +75,7 @@ describe('TokenStore', () => {
   it('should unsubscribe from observer', async () => {
     const observer = jest.fn()
 
-    const store = new TokenStore(handlers)
+    const store = new TokensStore(handlers)
     const unsubscribe = store.subscribe(observer)
     unsubscribe()
 
