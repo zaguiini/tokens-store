@@ -1,6 +1,6 @@
 {
   "name": "tokens-store",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A Token store for managing access and refresh tokens",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

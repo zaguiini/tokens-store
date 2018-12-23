@@ -1,10 +1,12 @@
+export type Token = string | null
+
 export interface Tokens {
-  accessToken?: string | null
-  refreshToken?: string | null
+  accessToken: Token
+  refreshToken: Token
 }
 
-export type SetterHandler = (token: string | null) => Promise<any>
-export type GetterHandler = () => Promise<string | null>
+export type SetterHandler = (token: Token) => Promise<any>
+export type GetterHandler = () => Promise<Token>
 export type Subscriber = (tokens: Tokens) => void
 
 export interface TokenHandlers {
@@ -35,18 +37,17 @@ class TokensStore {
   }
 
   private createPublishablePromise(promise: SetterHandler): SetterHandler {
-    return token =>
-      new Promise(async (resolve, reject) => {
-        try {
-          await promise(token)
-          const tokens = await this.getTokens()
+    return (token) => new Promise(async (resolve, reject) => {
+      try {
+        await promise(token)
+        const tokens = await this.getTokens()
 
-          this.subscribers.forEach(fn => fn(tokens)) // publish changes
-          resolve()
-        } catch (e) {
-          reject(e)
-        }
-      })
+        this.subscribers.forEach(fn => fn(tokens)) // publish changes
+        resolve()
+      } catch (e) {
+        reject(e)
+      }
+    })
   }
 
   subscribe(fn: Subscriber) {
